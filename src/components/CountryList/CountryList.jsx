@@ -4,6 +4,9 @@ import { Link, useLocation } from 'react-router-dom';
 
 const CountryList = ({ countries = [] }) => {
   const location = useLocation();
+  // повністю обьект локейшн записати в стейт. це куди повернутись
+  console.log('CountryList', location);
+  // хук юзЛокейшн повертає обьект місцезнаходження
 
   return (
     <Grid>

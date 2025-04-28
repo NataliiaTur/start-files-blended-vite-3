@@ -16,7 +16,11 @@ const Country = () => {
 
   // поверне об'єкт з динамічними параметрами. Якщо в Апп прописати в path декілька праметрів, то видасть все
   const { countryId } = useParams();
+
   const location = useLocation();
+  console.log('country location', location);
+  // перевір локейшн, якщо є записаний стейт із фромом, то адреса буде така локейшн-стейт-фром
+  // якщо ні, то відправ додому '/'
   const backLink = useRef(location?.state?.from || '/');
 
   useEffect(() => {
@@ -39,7 +43,6 @@ const Country = () => {
   return (
     <Section>
       <Container>
-        <Heading title="SearchCountry" bottom />
         {isLoading && (
           <Hourglass
             visible={true}
@@ -55,6 +58,7 @@ const Country = () => {
         {isLoading && <Loader />}
         {!error && country && <CountryInfo dataCountry={country} />}
 
+        {/* передамо змінну поточну  змінну беклінк */}
         <GoBackBtn to={backLink.current} />
       </Container>
     </Section>

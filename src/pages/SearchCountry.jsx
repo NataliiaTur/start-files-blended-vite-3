@@ -13,12 +13,16 @@ const SearchCountry = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // серчпарамс дозволяє зберігати пошукові параметри з урл.
+  // та отримати ключ(через гет)
   const [searchParams, setSearchParams] = useSearchParams();
-
   const region = searchParams.get('region');
+  console.log('region', region);
 
   useEffect(() => {
+    // це для того, щоб юзЕфект не виконувався при першому рендері
     if (!region) return;
+
     const fetchCountries = async () => {
       setIsLoading(true);
       setError(null);
@@ -38,15 +42,16 @@ const SearchCountry = () => {
   }, [region]);
 
   const handleSubmit = value => {
+    // потрібно зберігати в об'єкті регіон ( це ключ), а значення(value)
+    // із значенням, яке отримали з форми. Тепер значення треба отримати з урл (вище серчпарамс.гет)
     setSearchParams({ region: value });
   };
 
   return (
     <Section>
       <Container>
-        <Heading title="SearchCountry" bottom />
         <SearchForm onSubmit={handleSubmit} />
-        {error && <p>Ooops! Something went wrong!</p>}
+        {error && <Heading title="Ooops! Something went wrong!" bottom />}
         {isLoading && (
           <div
             style={{
@@ -58,7 +63,7 @@ const SearchCountry = () => {
             <Hourglass />
           </div>
         )}
-        <CountryList countries={countries} />
+        {countries.length > 0 && <CountryList countries={countries} />}
       </Container>
     </Section>
   );
